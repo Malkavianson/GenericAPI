@@ -24,7 +24,7 @@
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"isolatedModules": true,
-		"noImplicitThis": true,
+		"noImplicitThis": false,
 		"diagnostics": true,
 		"allowJs": true,
 		"strict": true,
