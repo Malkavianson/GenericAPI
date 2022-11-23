@@ -17,7 +17,7 @@ module.exports = {
 	},
 	ignorePatterns: [".eslintrc.js"],
 	rules: {
-		"@typescript-eslint/interface-name-prefix": "error",
+		"@typescript-eslint/interface-name-prefix": "warn",
 		"@typescript-eslint/explicit-function-return-type":
 			"error",
 		"@typescript-eslint/explicit-module-boundary-types":
