@@ -1,0 +1,26 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+generator erd {
+    provider = "prisma-erd-generator"
+    output   = "../db.pdf"
+}
+
+model Users {
+    id        String   @id @default(uuid())
+    name      String
+    email     String   @unique
+    password  String
+    cpf       String   @unique
+    isAdmin   Boolean  @default(false) @map("is_admin")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    @@map("users")
+}
