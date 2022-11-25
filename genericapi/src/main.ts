@@ -24,7 +24,10 @@ export async function bootstrap(): Promise<void> {
 		.setTitle("Generic API")
 		.setDescription("Controller API for educational purpose")
 		.setVersion("1.0")
+		.addTag("Auth")
+		.addTag("Users")
 		.addTag("Status")
+		.addBearerAuth()
 		.addServer("http://localhost:3333")
 		.build();
 
