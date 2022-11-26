@@ -9,6 +9,8 @@ import {
 	HttpCode,
 	HttpStatus,
 	UseGuards,
+	UnauthorizedException,
+	ImATeapotException,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -16,6 +18,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { User } from "./entities/user.entity";
 import { AuthGuard } from "@nestjs/passport";
+import { LoggedUser } from "src/auth/loggeduser.decorator";
 
 @ApiTags("User")
 @Controller("user")
@@ -26,8 +29,8 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Create a new User",
 	})
-	create(@Body() dto: CreateUserDto): Promise<User | void> {
-		return this.usersService.create(dto);
+	async create(@Body() dto: CreateUserDto): Promise<User | void> {
+		return await this.usersService.create(dto);
 	}
 
 	@Get()
@@ -36,8 +39,8 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Returns all users",
 	})
-	findAll(): Promise<User[]> {
-		return this.usersService.findAll();
+	async findAll(): Promise<User[]> {
+		return await this.usersService.findAll();
 	}
 
 	@Get(":id")
@@ -46,8 +49,8 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Returns one User by ID",
 	})
-	findOne(@Param("id") id: string): Promise<User> {
-		return this.usersService.findOne(id);
+	async findOne(@Param("id") id: string): Promise<User> {
+		return await this.usersService.findOne(id);
 	}
 
 	@Patch(":id")
@@ -56,11 +59,12 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Patch one User by ID",
 	})
-	update(
+	async update(
+		@LoggedUser() user: User,
 		@Param("id") id: string,
 		@Body() dto: UpdateUserDto,
-	): Promise<User | void> {
-		return this.usersService.update(id, dto);
+	): Promise<User | void | ImATeapotException> {
+		return await this.usersService.update(id, dto, user);
 	}
 
 	@Delete(":id")
@@ -70,7 +74,10 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Delete one User by ID",
 	})
-	remove(@Param("id") id: string): Promise<User> {
-		return this.usersService.remove(id);
+	async remove(
+		@LoggedUser() user: User,
+		@Param("id") id: string,
+	): Promise<User | UnauthorizedException> {
+		return await this.usersService.remove(id, user);
 	}
 }

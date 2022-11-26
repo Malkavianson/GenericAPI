@@ -1,5 +1,10 @@
 import handleErrorConstraintUnique from "src/utils/handleErrorConstraintUnique.utils";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+	ImATeapotException,
+	Injectable,
+	NotFoundException,
+	UnauthorizedException,
+} from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -36,8 +41,8 @@ export class UsersService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	findAll(): Promise<User[]> {
-		return this.prisma.users.findMany({
+	async findAll(): Promise<User[]> {
+		return await this.prisma.users.findMany({
 			select: this.userSelect,
 		});
 	}
@@ -55,29 +60,81 @@ export class UsersService {
 		return user;
 	}
 
-	findOne(id: string): Promise<User> {
-		return this.verifyIdAndReturnUser(id);
+	async findOne(id: string): Promise<User> {
+		return await this.verifyIdAndReturnUser(id);
 	}
 
-	async update(id: string, dto: UpdateUserDto): Promise<User | void> {
-		await this.verifyIdAndReturnUser(id);
+	private async updateUser(id: string, dto: UpdateUserDto): Promise<User> {
+		return await this.prisma.users
+			.update({
+				where: { id },
+				data: dto,
+				select: this.userSelect,
+			})
+			.catch(handleErrorConstraintUnique);
+	}
+
+	async update(
+		id: string,
+		dto: UpdateUserDto,
+		user: User,
+	): Promise<ImATeapotException | User> {
+		const thisUser = await this.verifyIdAndReturnUser(id);
 
 		if (dto.password) {
 			const hashedPassword = await bcrypt.hash(dto.password, 7);
 			dto.password = hashedPassword;
 		}
-
-		return this.prisma.users
-			.update({ where: { id }, data: dto, select: this.userSelect })
-			.catch(handleErrorConstraintUnique);
+		if (user.isAdmin) {
+			if (thisUser.id === user.id) {
+				this.updateUser(id, dto);
+				throw new ImATeapotException({
+					message: "I'm a teapot < you must to reload your session >",
+				});
+			} else {
+				return await this.prisma.users
+					.update({
+						where: { id },
+						data: dto,
+						select: this.userSelect,
+					})
+					.catch(handleErrorConstraintUnique);
+			}
+		} else if (thisUser.id === user.id) {
+			let message: string;
+			if (dto.isAdmin === true) {
+				dto.isAdmin = false;
+				message: "I'm a teapot < you cannot modify your credential levels & you must to reload your session >";
+			} else {
+				message: "I'm a teapot < you must to reload your session >";
+			}
+			await this.updateUser(id, dto).catch(handleErrorConstraintUnique);
+			throw new ImATeapotException({
+				message,
+			});
+		} else {
+			throw new UnauthorizedException("not authorized");
+		}
 	}
 
-	async remove(id: string): Promise<User> {
-		await this.verifyIdAndReturnUser(id);
-
-		return this.prisma.users.delete({
-			where: { id },
-			select: this.userSelect,
-		});
+	async remove(
+		id: string,
+		user: User,
+	): Promise<User | UnauthorizedException> {
+		const thisUser = await this.verifyIdAndReturnUser(id);
+		if (user.isAdmin) {
+			return await this.prisma.users.delete({
+				where: { id },
+				select: this.userSelect,
+			});
+		}
+		if (thisUser.id === user.id) {
+			return await this.prisma.users.delete({
+				where: { id },
+				select: this.userSelect,
+			});
+		} else {
+			return new UnauthorizedException("not authorized");
+		}
 	}
 }
