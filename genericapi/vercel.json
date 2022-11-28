@@ -1,9 +1,18 @@
 {
+	"installCommand": "yarn && yarn format && yarn lint",
+	"buildCommand": "nest build",
+	"outputDirectory": "dist",
 	"version": 2,
+	"builds": [
+		{
+			"src": "dist/main.ts",
+			"use": "@vercel/node"
+		}
+	],
 	"routes": [
 		{
 			"src": "/(.*)",
-			"dest": "dist/main.js",
+			"dest": "dist/main.ts",
 			"methods": ["GET", "POST", "PUT", "PATCH", "DELETE"]
 		}
 	]
