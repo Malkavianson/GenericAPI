@@ -14,7 +14,7 @@
 		"prod": "node dist/main",
 		"prodev": "yarn format && yarn lint && yarn dev",
 		"prostart": "yarn format && yarn lint && yarn build && yarn start",
-		"start": "nest start",
+		"start": "start http://localhost:3333 & nest start",
 		"start:debug": "nest start --debug --watch"
 	},
 	"dependencies": {
