@@ -14,8 +14,8 @@
 		"prod": "node dist/main",
 		"prodev": "yarn format && yarn lint && yarn dev",
 		"prostart": "yarn format && yarn lint && yarn build && yarn start",
-		"start": "start http://localhost:3333 & nest start",
-		"start:debug": "nest start --debug --watch"
+		"start": "nest start",
+		"vercel": "xdg-open start http://localhost:3333 & yarn prostart"
 	},
 	"dependencies": {
 		"@nestjs/common": "^9.0.0",
