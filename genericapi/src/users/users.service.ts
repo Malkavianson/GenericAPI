@@ -1,4 +1,4 @@
-import handleErrorConstraintUnique from "src/utils/handleErrorConstraintUnique.utils";
+import handleErrorConstraintUnique from "../utils/handleErrorConstraintUnique.utils";
 import {
 	ImATeapotException,
 	Injectable,
