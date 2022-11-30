@@ -8,8 +8,8 @@
 	"scripts": {
 		"build": "nest build",
 		"dev": "nest start --watch",
-		"format": "prettier --write .",
-		"lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+		"format": "prettier --write \"src/**/*.*\"",
+		"lint": "eslint \"{src,test}/**/*.ts\" --fix",
 		"prebuild": "rimraf dist",
 		"prod": "node dist/main",
 		"prodev": "yarn format && yarn lint && yarn dev",
