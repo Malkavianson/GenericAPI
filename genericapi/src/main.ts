@@ -40,7 +40,7 @@ export async function bootstrap(): Promise<void> {
 
 	await app.listen(PORT, () => {
 		console.log(`App bootstraped at :${PORT}`);
-		return response.end();
+		return response.sendStatus(200);
 	});
 }
 bootstrap();
