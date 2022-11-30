@@ -38,6 +38,7 @@ export async function bootstrap(): Promise<void> {
 	console.log("Mapping routes:");
 
 	await app.listen(PORT, () => {
+		console.log("isInteractive", process.stdout.isTTY);
 		console.log(`App bootstraped at :${PORT}`);
 	});
 }
