@@ -3,7 +3,6 @@ import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { response } from "express";
 
 const PORT = process.env.PORT || 3333;
 
@@ -40,7 +39,6 @@ export async function bootstrap(): Promise<void> {
 
 	await app.listen(PORT, () => {
 		console.log(`App bootstraped at :${PORT}`);
-		return response.sendStatus(200);
 	});
 }
 bootstrap();
