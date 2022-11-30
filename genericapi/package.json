@@ -14,8 +14,7 @@
 		"prod": "node dist/main",
 		"prodev": "yarn format && yarn lint && yarn dev",
 		"prostart": "yarn format && yarn lint && yarn build && yarn start",
-		"start": "nest start",
-		"vercel": "xdg-open start http://localhost:3333 & yarn prostart"
+		"start": "nest start"
 	},
 	"dependencies": {
 		"@nestjs/common": "^9.0.0",
@@ -29,7 +28,6 @@
 		"bcryptjs": "^2.4.3",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.13.2",
-		"cross-env": "^7.0.3",
 		"passport": "^0.6.0",
 		"passport-jwt": "^4.0.0",
 		"passport-local": "^1.0.0",

@@ -3,6 +3,7 @@ import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { response } from "express";
 
 const PORT = process.env.PORT || 3333;
 
@@ -37,6 +38,9 @@ export async function bootstrap(): Promise<void> {
 	console.log("Swagger.setup Builded");
 	console.log("Mapping routes:");
 
-	await app.listen(PORT, () => console.log(`App bootstraped at :${PORT}`));
+	await app.listen(PORT, () => {
+		console.log(`App bootstraped at :${PORT}`);
+		return response.end();
+	});
 }
 bootstrap();
