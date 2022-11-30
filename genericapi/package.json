@@ -17,6 +17,7 @@
 		"start": "nest start"
 	},
 	"dependencies": {
+		"@mermaid-js/mermaid-cli": "^9.1.6",
 		"@nestjs/common": "^9.0.0",
 		"@nestjs/core": "^9.0.0",
 		"@nestjs/jwt": "^9.0.0",
@@ -25,7 +26,6 @@
 		"@nestjs/swagger": "^6.0.1",
 		"@nestjsi/class-validator": "^0.2.1",
 		"@prisma/client": "^4.5.0",
-		"@mermaid-js/mermaid-cli": "9.1.6",
 		"@prisma/generator-helper": "^4.0.0",
 		"bcryptjs": "^2.4.3",
 		"class-transformer": "^0.5.1",

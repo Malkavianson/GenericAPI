@@ -1,6 +1,9 @@
 {
 	"version": 2,
-	"env": {},
+	"env": {
+		"DATABASE_URL": "postgres://gwrhkuib:zROZp5pdgWH36dbpWn35V6uwUyxDSfwS@babar.db.elephantsql.com/gwrhkuib",
+		"JWT_SECRET": "dafea7dc-5c52-48n5-9p22-670h0fe6x310"
+	},
 	"builds": [
 		{
 			"src": "src/main.ts",
