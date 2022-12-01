@@ -28,6 +28,7 @@ export async function bootstrap(): Promise<void> {
 		.addTag("User")
 		.addTag("Status")
 		.addBearerAuth()
+		.addServer("https://generic-api-beta.vercel.app/")
 		.addServer("http://localhost:3333")
 		.build();
 
@@ -39,7 +40,6 @@ export async function bootstrap(): Promise<void> {
 	await app.listen(PORT, () => {
 		console.log(`App bootstraped at :${PORT}`);
 	});
-	console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
 
