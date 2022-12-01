@@ -32,13 +32,22 @@ export async function bootstrap(): Promise<void> {
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup("docs", app, document);
+	SwaggerModule.setup("docs", app, document, {
+		swaggerOptions: {
+			customJs:
+				"https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js",
+		},
+	});
 
 	console.log("Swagger.setup Builded");
 	console.log("Mapping routes:");
-
 	await app.listen(PORT, () => {
 		console.log(`App bootstraped at :${PORT}`);
 	});
 }
 bootstrap();
+
+// app.UseSwaggerUI(c => {
+// c.InjectJavascript("https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js", "text/javascript");
+// c.SwaggerEndpoint($"/swagger/{_swaggerVersion}/swagger.json", _appSettings.ApiName);
+// });
