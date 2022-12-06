@@ -18,10 +18,7 @@ export class AuthService {
 		createdAt: true,
 	};
 
-	constructor(
-		private readonly prisma: PrismaService,
-		private readonly jwtService: JwtService,
-	) {}
+	constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService) {}
 
 	async login({ email, password }: LoginDto): Promise<ResponseLoginDto> {
 		const user: User = await this.prisma.users.findUnique({
@@ -37,10 +34,7 @@ export class AuthService {
 			throw new NotFoundException("Invalid email or password ");
 		}
 
-		const passwordMatch: boolean = await bcrypt.compare(
-			password,
-			user.password,
-		);
+		const passwordMatch: boolean = await bcrypt.compare(password, user.password);
 
 		if (!passwordMatch) {
 			throw new NotFoundException("Invalid email or password ");

@@ -1,10 +1,5 @@
 import handleErrorConstraintUnique from "../utils/handleErrorConstraintUnique.utils";
-import {
-	ImATeapotException,
-	Injectable,
-	NotFoundException,
-	UnauthorizedException,
-} from "@nestjs/common";
+import { ImATeapotException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import * as bcrypt from "bcryptjs";
@@ -36,9 +31,7 @@ export class UsersService {
 			isAdmin: false,
 		};
 
-		return this.prisma.users
-			.create({ data, select: this.userSelect })
-			.catch(handleErrorConstraintUnique);
+		return this.prisma.users.create({ data, select: this.userSelect }).catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<User[]> {
@@ -74,11 +67,7 @@ export class UsersService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async update(
-		id: string,
-		dto: UpdateUserDto,
-		user: User,
-	): Promise<ImATeapotException | User> {
+	async update(id: string, dto: UpdateUserDto, user: User): Promise<ImATeapotException | User> {
 		const thisUser = await this.verifyIdAndReturnUser(id);
 
 		if (dto.password) {
@@ -117,10 +106,7 @@ export class UsersService {
 		}
 	}
 
-	async remove(
-		id: string,
-		user: User,
-	): Promise<User | UnauthorizedException> {
+	async remove(id: string, user: User): Promise<User | UnauthorizedException> {
 		const thisUser = await this.verifyIdAndReturnUser(id);
 		if (user.isAdmin) {
 			return await this.prisma.users.delete({

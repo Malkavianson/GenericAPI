@@ -20,17 +20,7 @@ export async function bootstrap(): Promise<void> {
 
 	console.log("Server Started\n\nMapping documentation");
 
-	const config = new DocumentBuilder()
-		.setTitle("Generic API")
-		.setDescription("Controller API for educational purpose")
-		.setVersion("1.0")
-		.addTag("Auth")
-		.addTag("User")
-		.addTag("Status")
-		.addBearerAuth()
-		.addServer("https://generic-api-beta.vercel.app/")
-		.addServer("http://localhost:3333")
-		.build();
+	const config = new DocumentBuilder().setTitle("Generic API").setDescription("Controller API for educational purpose").setVersion("1.0").addTag("Auth").addTag("User").addTag("Status").addBearerAuth().addServer("https://generic-api-beta.vercel.app/").addServer("http://localhost:3333").build();
 
 	const document = SwaggerModule.createDocument(app, config);
 	SwaggerModule.setup("docs", app, document);
@@ -42,8 +32,3 @@ export async function bootstrap(): Promise<void> {
 	});
 }
 bootstrap();
-
-// app.UseSwaggerUI(c => {
-// c.InjectJavascript("https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.3/swagger-ui-bundle.js", "text/javascript");
-// c.SwaggerEndpoint($"/swagger/{_swaggerVersion}/swagger.json", _appSettings.ApiName);
-// });
