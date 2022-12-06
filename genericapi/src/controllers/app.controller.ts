@@ -1,6 +1,6 @@
 import { Controller, Get, Res } from "@nestjs/common";
 import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
-import { AppService } from "./app.service";
+import { AppService } from "../services";
 
 @ApiTags("Status")
 @Controller()

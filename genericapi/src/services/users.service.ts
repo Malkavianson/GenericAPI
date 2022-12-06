@@ -1,10 +1,9 @@
-import handleErrorConstraintUnique from "../utils/handleErrorConstraintUnique.utils";
 import { ImATeapotException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import * as bcrypt from "bcryptjs";
+import handleErrorConstraintUnique from "../utils/handleErrorConstraintUnique.utils";
+import { CreateUserDto, UpdateUserDto } from "../core";
 import { PrismaService } from "./prisma.service";
-import { User } from "../models/user.entity";
+import * as bcrypt from "bcryptjs";
+import { User } from "./models";
 
 @Injectable()
 export class UsersService {

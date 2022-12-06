@@ -1,10 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, UnauthorizedException, ImATeapotException } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { LoggedUser } from "../decorators/loggeduser.decorator";
-import { UpdateUserDto } from "../services/dto/update-user.dto";
-import { CreateUserDto } from "../services/dto/create-user.dto";
+import { UpdateUserDto } from "../core/dto/update-user.dto";
+import { CreateUserDto } from "../core/dto/create-user.dto";
 import { UsersService } from "../services/users.service";
-import { User } from "../models/user.entity";
+import { User } from "../services";
 import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("User")

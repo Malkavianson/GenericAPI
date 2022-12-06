@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ResponseLoginDto } from "./dto/responseLogin.dto";
+import { ResponseLoginDto } from "../core/dto/responseLogin.dto";
 import { PrismaService } from "./prisma.service";
-import { User } from "../models/user.entity";
-import { LoginDto } from "./dto/login.dto";
+import { User } from "./models";
+import { LoginDto } from "../core/dto/login.dto";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 
