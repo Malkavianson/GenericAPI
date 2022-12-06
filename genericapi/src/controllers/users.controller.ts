@@ -12,13 +12,13 @@ import {
 	UnauthorizedException,
 	ImATeapotException,
 } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { User } from "./entities/user.entity";
+import { LoggedUser } from "../decorators/loggeduser.decorator";
+import { UpdateUserDto } from "../services/dto/update-user.dto";
+import { CreateUserDto } from "../services/dto/create-user.dto";
+import { UsersService } from "../services/users.service";
+import { User } from "../models/user.entity";
 import { AuthGuard } from "@nestjs/passport";
-import { LoggedUser } from "../auth/loggeduser.decorator";
 
 @ApiTags("User")
 @Controller("user")

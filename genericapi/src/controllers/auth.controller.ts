@@ -8,12 +8,12 @@ import {
 	UseGuards,
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { ResponseLoginDto } from "./dto/responseLogin.dto";
-import { User } from "../users/entities/user.entity";
-import { LoggedUser } from "./loggeduser.decorator";
+import { ResponseLoginDto } from "../services/dto/responseLogin.dto";
+import { LoggedUser } from "../decorators/loggeduser.decorator";
+import { AuthService } from "../services/auth.service";
+import { LoginDto } from "../services/dto/login.dto";
+import { User } from "../models/user.entity";
 import { AuthGuard } from "@nestjs/passport";
-import { AuthService } from "./auth.service";
-import { LoginDto } from "./dto/login.dto";
 
 @ApiTags("Auth")
 @Controller("auth")

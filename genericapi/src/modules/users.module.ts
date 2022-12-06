@@ -1,9 +1,9 @@
-import { PrismaModule } from "../prisma/prisma.module";
-import { UsersController } from "./users.controller";
+import { UsersController } from "../controllers/users.controller";
+import { UsersService } from "../services/users.service";
 import { PassportModule } from "@nestjs/passport";
-import { UsersService } from "./users.service";
-import { JwtModule } from "@nestjs/jwt";
+import { PrismaModule } from "./prisma.module";
 import { Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
 
 @Module({
 	controllers: [UsersController],
