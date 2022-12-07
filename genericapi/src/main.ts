@@ -20,7 +20,7 @@ export async function bootstrap(): Promise<void> {
 
 	console.log("Server Started\n\nMapping documentation");
 
-	const config = new DocumentBuilder().setTitle("Generic API").setDescription("Controller API for educational purpose").setVersion("1.0").addTag("Auth").addTag("User").addTag("Status").addBearerAuth().addServer("https://generic-api-beta.vercel.app/").addServer("http://localhost:3333").build();
+	const config = new DocumentBuilder().setTitle("Generic API").setDescription("Controller API for educational purpose").setVersion("1.0").addTag("Auth").addBearerAuth().addServer("https://generic-api-beta.vercel.app/").addServer("http://localhost:3333").build();
 
 	const document = SwaggerModule.createDocument(app, config);
 	SwaggerModule.setup("docs", app, document);
