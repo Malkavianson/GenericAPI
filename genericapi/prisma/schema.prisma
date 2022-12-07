@@ -1,26 +1,100 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator erd {
-    provider = "prisma-erd-generator"
-    output   = "../db.pdf"
+  provider = "prisma-erd-generator"
+  output   = "../db.pdf"
 }
 
 model Users {
-    id        String   @id @default(uuid())
-    name      String
-    email     String   @unique
-    password  String
-    cpf       String   @unique
-    isAdmin   Boolean  @default(false) @map("is_admin")
-    createdAt DateTime @default(now()) @map("created_at")
-    updatedAt DateTime @updatedAt @map("updated_at")
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  password  String
+  cpf       String     @unique
+  isAdmin   Boolean    @default(false) @map("is_admin")
+  favorites Favorite[]
+  orders    Order[]
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
 
-    @@map("users")
+  @@map("users")
+}
+
+model Product {
+  id          String           @id @default(uuid())
+  name        String           @unique
+  description String
+  price       Float
+  image       String
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  category    Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId  String?          @map("category_id")
+  favorites   Favorite[]
+  orders      OrderToProduct[]
+
+  @@map("product")
+}
+
+model Arrival {
+  id        String   @id @default(uuid())
+  number    Int      @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  orders    Order[]
+
+  @@map("arrival")
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  products  Product[]
+
+  @@map("category")
+}
+
+model Favorite {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        Users    @relation(fields: [userId], references: [id], onDelete: NoAction)
+  userId      String   @map("user_id")
+  product     Product  @relation(fields: [productName], references: [name], onDelete: Cascade)
+  productName String   @map("product_name")
+
+  @@unique([userId, productName])
+  @@map("favorite")
+}
+
+model Order {
+  id            String           @id @default(uuid())
+  createdAt     DateTime         @default(now()) @map("created_at")
+  arrival       Arrival?         @relation(fields: [arrivalNumber], references: [number], onDelete: SetNull)
+  arrivalNumber Int?             @map("arrival_number")
+  user          Users?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId        String?          @map("user_id")
+  products      OrderToProduct[]
+
+  @@map("order")
+}
+
+model OrderToProduct {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId String?  @map("product_id")
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  orderId   String?  @map("order_id")
+  quantity  Int
+
+  @@map("order_to_product")
 }
