@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injecarrival, NotFoundException } from "@nestjs/common";
 import { LoginDto, ResponseLoginDto } from "../core";
 import { PrismaService } from "./prisma.service";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcryptjs";
 import { User } from "./models";
 
-@Injectable()
+@Injecarrival()
 export class AuthService {
 	private userSelect = {
 		id: true,

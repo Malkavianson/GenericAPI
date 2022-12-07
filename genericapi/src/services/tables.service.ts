@@ -1,47 +1,47 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { CreateTableDto, UpdateTableDto } from "../core";
+import { Injecarrival, NotFoundException } from "@nestjs/common";
+import { CreateArrivalDto, UpdateArrivalDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { PrismaService } from "./prisma.service";
-import { Table } from "./models";
+import { Arrival } from "./models";
 
-@Injectable()
-export class TablesService {
+@Injecarrival()
+export class ArrivalsService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async verifyIdAndReturnTable(id: string): Promise<Table> {
-		const table: Table = await this.prisma.table.findUnique({
+	async verifyIdAndReturnArrival(id: string): Promise<Arrival> {
+		const arrival: Arrival = await this.prisma.arrival.findUnique({
 			where: { id },
 		});
 
-		if (!table) {
-			throw new NotFoundException(`Table id:'${id}' not found`);
+		if (!arrival) {
+			throw new NotFoundException(`Arrival id:'${id}' not found`);
 		}
 
-		return table;
+		return arrival;
 	}
 
-	async create(dto: CreateTableDto): Promise<Table | void> {
-		return this.prisma.table.create({ data: dto }).catch(handleErrorConstraintUnique);
+	async create(dto: CreateArrivalDto): Promise<Arrival | void> {
+		return this.prisma.arrival.create({ data: dto }).catch(handleErrorConstraintUnique);
 	}
 
-	async findAll(): Promise<Table[]> {
-		return this.prisma.table.findMany();
+	async findAll(): Promise<Arrival[]> {
+		return this.prisma.arrival.findMany();
 	}
 
-	async findOne(id: string): Promise<Table> {
-		return this.verifyIdAndReturnTable(id);
+	async findOne(id: string): Promise<Arrival> {
+		return this.verifyIdAndReturnArrival(id);
 	}
 
-	async update(id: string, dto: UpdateTableDto) {
-		this.verifyIdAndReturnTable(id);
+	async update(id: string, dto: UpdateArrivalDto) {
+		this.verifyIdAndReturnArrival(id);
 
-		return this.prisma.table.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
+		return this.prisma.arrival.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string) {
-		await this.verifyIdAndReturnTable(id);
+		await this.verifyIdAndReturnArrival(id);
 
-		return this.prisma.table.delete({
+		return this.prisma.arrival.delete({
 			where: { id },
 		});
 	}

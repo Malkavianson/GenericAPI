@@ -1,53 +1,53 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { CreateTableDto, UpdateTableDto } from "../core";
-import { TablesService, Table } from "../services";
+import { CreateArrivalDto, UpdateArrivalDto } from "../core";
+import { ArrivalsService, Arrival } from "../services";
 import { AuthGuard } from "@nestjs/passport";
 
 @UseGuards(AuthGuard())
-@ApiTags("Tables")
+@ApiTags("Arrivals")
 @ApiBearerAuth()
-@Controller("tables")
-export class TablesController {
-	constructor(private readonly tablesService: TablesService) {}
+@Controller("arrivals")
+export class ArrivalsController {
+	constructor(private readonly arrivalsService: ArrivalsService) {}
 
 	@Post()
 	@ApiOperation({
-		summary: "Fill a new table state",
+		summary: "Fill a new arrival state",
 	})
-	create(@Body() dto: CreateTableDto): Promise<Table | void> {
-		return this.tablesService.create(dto);
+	create(@Body() dto: CreateArrivalDto): Promise<Arrival | void> {
+		return this.arrivalsService.create(dto);
 	}
 
 	@Get()
 	@ApiOperation({
-		summary: "List all Tables",
+		summary: "List all Arrivals",
 	})
-	findAll(): Promise<Table[]> {
-		return this.tablesService.findAll();
+	findAll(): Promise<Arrival[]> {
+		return this.arrivalsService.findAll();
 	}
 
 	@Get(":id")
 	@ApiOperation({
-		summary: "Find one Table by ID",
+		summary: "Find one Arrival by ID",
 	})
-	findOne(@Param("id") id: string): Promise<Table> {
-		return this.tablesService.findOne(id);
+	findOne(@Param("id") id: string): Promise<Arrival> {
+		return this.arrivalsService.findOne(id);
 	}
 
 	@Patch(":id")
 	@ApiOperation({
-		summary: "Patch Table state information",
+		summary: "Patch Arrival state information",
 	})
-	update(@Param("id") id: string, @Body() dto: UpdateTableDto): Promise<Table | void> {
-		return this.tablesService.update(id, dto);
+	update(@Param("id") id: string, @Body() dto: UpdateArrivalDto): Promise<Arrival | void> {
+		return this.arrivalsService.update(id, dto);
 	}
 
 	@Delete(":id")
 	@ApiOperation({
-		summary: "Release one Table state by ID",
+		summary: "Release one Arrival state by ID",
 	})
 	remove(@Param("id") id: string) {
-		return this.tablesService.remove(id);
+		return this.arrivalsService.remove(id);
 	}
 }

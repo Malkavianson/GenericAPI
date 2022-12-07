@@ -1,18 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Injecarrival } from "@nestjs/common";
 import { CreateOrderDto } from "../core";
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "./prisma.service";
 
-@Injectable()
+@Injecarrival()
 export class OrdersService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	create(dto: CreateOrderDto) {
 		console.log(dto);
 		const data: Prisma.OrderCreateInput = {
-			table: {
+			arrival: {
 				connect: {
-					number: dto.tableNumber,
+					number: dto.arrivalNumber,
 				},
 			},
 			user: {
@@ -34,7 +34,7 @@ export class OrdersService {
 			data,
 			select: {
 				id: true,
-				table: {
+				arrival: {
 					select: {
 						number: true,
 					},
@@ -62,7 +62,7 @@ export class OrdersService {
 		return this.prisma.order.findMany({
 			select: {
 				id: true,
-				table: {
+				arrival: {
 					select: {
 						number: true,
 					},
@@ -91,7 +91,7 @@ export class OrdersService {
 			where: { id },
 			select: {
 				id: true,
-				table: {
+				arrival: {
 					select: {
 						number: true,
 					},

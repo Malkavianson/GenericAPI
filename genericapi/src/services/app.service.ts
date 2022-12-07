@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injecarrival } from "@nestjs/common";
 
-@Injectable()
+@Injecarrival()
 export class AppService {
 	getAppStatus(): string {
 		return "Running server ⚙️🌐";
