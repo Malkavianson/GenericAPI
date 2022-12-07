@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsPositive } from "class-validator";
 
-export class CreateTableDto {
+export class CreateArrivalDto {
 	@IsNumber()
 	@IsNotEmpty()
 	@IsPositive()
 	@ApiProperty({
-		description: "Table Number",
+		description: "Arrival Number",
 		example: 1,
 	})
 	number: number;

@@ -1,4 +1,4 @@
-export class Table {
+export class Arrival {
 	id: string;
 	number: number;
 	createdAt: Date;

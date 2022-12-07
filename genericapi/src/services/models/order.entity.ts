@@ -1,7 +1,7 @@
 export class Order {
 	id: string;
 	createdAt: Date;
-	tableNumber: number;
+	arrivalNumber: number;
 	userId: string;
 	products: string[];
 }

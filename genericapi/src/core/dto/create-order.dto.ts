@@ -7,10 +7,10 @@ export class CreateOrderDto {
 	@IsNumber()
 	@IsPositive()
 	@ApiProperty({
-		description: "Costumer number table",
+		description: "Costumer number arrival",
 		example: 10,
 	})
-	tableNumber: number;
+	arrivalNumber: number;
 
 	@IsUUID()
 	@ApiProperty({
