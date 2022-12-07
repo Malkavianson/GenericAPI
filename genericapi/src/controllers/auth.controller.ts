@@ -1,11 +1,9 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ResponseLoginDto, LoginDto } from "../core";
-import { User } from "../services";
-import { AuthService } from "../services";
-import { LoggedUser } from "../decorators/loggeduser.decorator";
+import { AuthService, User } from "../services";
 import { AuthGuard } from "@nestjs/passport";
-
+import { LoggedUser } from "../decorators";
 @ApiTags("Auth")
 @Controller("auth")
 export class AuthController {
