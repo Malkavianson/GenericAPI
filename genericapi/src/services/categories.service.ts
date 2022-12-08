@@ -21,15 +21,15 @@ export class CategoriesService {
 	}
 
 	async create(dto: CreateCategoryDto): Promise<Category> {
-		return this.prisma.category.create({ data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.category.create({ data: dto }).catch(handleErrorConstraintUnique);
 	}
 
-	findAll(): Promise<Category[]> {
-		return this.prisma.category.findMany();
+	async findAll(): Promise<Category[]> {
+		return await this.prisma.category.findMany().catch(handleErrorConstraintUnique);
 	}
 
-	findOne(id: string): Promise<Category> {
-		return this.verifyIdAndReturnCategory(id);
+	async findOne(id: string): Promise<Category> {
+		return await this.verifyIdAndReturnCategory(id);
 	}
 
 	async update(id: string, dto: UpdateCategoryDto): Promise<Category> {
@@ -38,14 +38,16 @@ export class CategoriesService {
 		return this.prisma.category.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string) {
+	async remove(id: string): Promise<Category> {
 		await this.verifyIdAndReturnCategory(id);
 
 		try {
-			return await this.prisma.category.delete({
-				where: { id },
-				select: { name: true },
-			});
+			return await this.prisma.category
+				.delete({
+					where: { id },
+					select: { name: true },
+				})
+				.catch(handleErrorConstraintUnique);
 		} catch (err) {
 			throw new UnauthorizedException(`Category ID: '${id}' still filled`);
 		}

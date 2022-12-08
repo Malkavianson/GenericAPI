@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateCategoryDto, UpdateCategoryDto } from "../core";
@@ -49,7 +47,7 @@ export class CategoriesController {
 	@ApiOperation({
 		summary: "Delete one Product Category by ID",
 	})
-	remove(@Param("id") id: string) {
+	remove(@Param("id") id: string): Promise<Category> {
 		return this.categoriesService.remove(id);
 	}
 }
