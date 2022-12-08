@@ -21,27 +21,27 @@ export class ArrivalsService {
 	}
 
 	async create(dto: CreateArrivalDto): Promise<Arrival | void> {
-		return this.prisma.arrival.create({ data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.arrival.create({ data: dto }).catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<Arrival[]> {
-		return this.prisma.arrival.findMany();
+		return await this.prisma.arrival.findMany();
 	}
 
 	async findOne(id: string): Promise<Arrival> {
-		return this.verifyIdAndReturnArrival(id);
+		return await this.verifyIdAndReturnArrival(id);
 	}
 
 	async update(id: string, dto: UpdateArrivalDto): Promise<Arrival> {
-		this.verifyIdAndReturnArrival(id);
+		await this.verifyIdAndReturnArrival(id);
 
-		return this.prisma.arrival.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.arrival.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<Arrival> {
 		await this.verifyIdAndReturnArrival(id);
 
-		return this.prisma.arrival.delete({
+		return await this.prisma.arrival.delete({
 			where: { id },
 		});
 	}
