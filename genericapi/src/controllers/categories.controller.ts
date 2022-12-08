@@ -15,39 +15,39 @@ export class CategoriesController {
 	@ApiOperation({
 		summary: "Product Category creator",
 	})
-	create(@Body() dto: CreateCategoryDto): Promise<Category> {
-		return this.categoriesService.create(dto);
+	async create(@Body() dto: CreateCategoryDto): Promise<Category> {
+		return await this.categoriesService.create(dto);
 	}
 
 	@Get()
 	@ApiOperation({
 		summary: "List all Products Categories",
 	})
-	findAll(): Promise<Category[]> {
-		return this.categoriesService.findAll();
+	async findAll(): Promise<Category[]> {
+		return await this.categoriesService.findAll();
 	}
 
 	@Get(":id")
 	@ApiOperation({
 		summary: "List one Product Category by ID",
 	})
-	findOne(@Param("id") id: string): Promise<Category> {
-		return this.categoriesService.findOne(id);
+	async findOne(@Param("id") id: string): Promise<Category> {
+		return await this.categoriesService.findOne(id);
 	}
 
 	@Patch(":id")
 	@ApiOperation({
 		summary: "Patch one Product Category by ID",
 	})
-	update(@Param("id") id: string, @Body() dto: UpdateCategoryDto): Promise<Category> {
-		return this.categoriesService.update(id, dto);
+	async update(@Param("id") id: string, @Body() dto: UpdateCategoryDto): Promise<Category> {
+		return await this.categoriesService.update(id, dto);
 	}
 
 	@Delete(":id")
 	@ApiOperation({
 		summary: "Delete one Product Category by ID",
 	})
-	remove(@Param("id") id: string): Promise<Category> {
-		return this.categoriesService.remove(id);
+	async remove(@Param("id") id: string): Promise<Category> {
+		return await this.categoriesService.remove(id);
 	}
 }

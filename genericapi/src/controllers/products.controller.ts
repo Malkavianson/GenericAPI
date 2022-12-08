@@ -33,8 +33,8 @@ export class ProductsController {
 	@ApiOperation({
 		summary: "List all products",
 	})
-	findAll(@Query() query: Partial<Product>): Promise<Product[]> {
-		return this.productsService.findAll(query);
+	async findAll(@Query() query: Partial<Product>): Promise<Product[]> {
+		return await this.productsService.findAll(query);
 	}
 
 	@Get(":id")
