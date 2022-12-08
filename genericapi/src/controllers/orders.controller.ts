@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
-import { OrdersService } from "../services";
+import { Order, OrdersService } from "../services";
 import { CreateOrderDto } from "../core";
 
 @UseGuards(AuthGuard())
@@ -15,7 +15,7 @@ export class OrdersController {
 	@ApiOperation({
 		summary: "Register a new Order",
 	})
-	async create(@Body() dto: CreateOrderDto) {
+	async create(@Body() dto: CreateOrderDto): Promise<Order> {
 		return await this.ordersService.create(dto);
 	}
 
@@ -23,7 +23,7 @@ export class OrdersController {
 	@ApiOperation({
 		summary: "List all Orders",
 	})
-	async findAll() {
+	async findAll(): Promise<Order[]> {
 		return await this.ordersService.findAll();
 	}
 
