@@ -7,8 +7,7 @@ import { PrismaService } from "./prisma.service";
 export class OrdersService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	create(dto: CreateOrderDto) {
-		console.log(dto);
+	async create(dto: CreateOrderDto) {
 		const data: Prisma.OrderCreateInput = {
 			arrival: {
 				connect: {
@@ -34,21 +33,20 @@ export class OrdersService {
 			data,
 			select: {
 				id: true,
-				arrival: {
-					select: {
-						number: true,
-					},
-				},
+				arrival: true,
 				user: {
 					select: {
+						id: true,
 						name: true,
 					},
 				},
 				products: {
 					select: {
+						id: true,
 						quantity: true,
 						product: {
 							select: {
+								id: true,
 								name: true,
 							},
 						},
