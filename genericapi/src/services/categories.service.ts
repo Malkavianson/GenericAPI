@@ -35,7 +35,7 @@ export class CategoriesService {
 	async update(id: string, dto: UpdateCategoryDto): Promise<Category> {
 		await this.verifyIdAndReturnCategory(id);
 
-		return this.prisma.category.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.category.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<Category> {

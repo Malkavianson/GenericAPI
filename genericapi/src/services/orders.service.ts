@@ -30,7 +30,7 @@ export class OrdersService {
 			},
 		};
 
-		return this.prisma.order.create({
+		return await this.prisma.order.create({
 			data,
 			select: {
 				id: true,
@@ -57,8 +57,8 @@ export class OrdersService {
 		});
 	}
 
-	findAll(): Promise<Order[]> {
-		return this.prisma.order.findMany({
+	async findAll(): Promise<Order[]> {
+		return await this.prisma.order.findMany({
 			select: {
 				id: true,
 				arrival: true,
@@ -81,8 +81,8 @@ export class OrdersService {
 		});
 	}
 
-	findOne(id: string): Promise<Order> {
-		return this.prisma.order.findUnique({
+	async findOne(id: string): Promise<Order> {
+		return await this.prisma.order.findUnique({
 			where: { id },
 			select: {
 				id: true,

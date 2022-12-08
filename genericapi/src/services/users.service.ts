@@ -30,7 +30,7 @@ export class UsersService {
 			isAdmin: false,
 		};
 
-		return this.prisma.users.create({ data, select: this.userSelect }).catch(handleErrorConstraintUnique);
+		return await this.prisma.users.create({ data, select: this.userSelect }).catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<User[]> {
