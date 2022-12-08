@@ -72,7 +72,7 @@ export class ProductsController {
 		summary: "Delete one Product by ID",
 	})
 	@ApiBearerAuth()
-	async remove(@Param("id") id: string) {
+	async remove(@Param("id") id: string): Promise<Product> {
 		return await this.productsService.remove(id);
 	}
 
@@ -83,7 +83,7 @@ export class ProductsController {
 	})
 	@UseGuards(AuthGuard())
 	@ApiBearerAuth()
-	async disFav(@Param("id") id: string) {
+	async disFav(@Param("id") id: string): Promise<Favorite> {
 		return await this.productsService.disFav(id);
 	}
 
@@ -94,7 +94,7 @@ export class ProductsController {
 	})
 	@UseGuards(AuthGuard())
 	@ApiBearerAuth()
-	async disfavAll(@Param("id") id: string) {
+	async disfavAll(@Param("id") id: string): Promise<string> {
 		return await this.productsService.disFavAll(id);
 	}
 }
