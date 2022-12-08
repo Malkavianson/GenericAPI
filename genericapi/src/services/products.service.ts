@@ -103,7 +103,7 @@ export class ProductsService {
 		return await this.prisma.product.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string) {
+	async remove(id: string): Promise<Product> {
 		await this.verifyIdAndReturnProduct(id);
 		try {
 			return await this.prisma.product.delete({ where: { id } });
@@ -112,13 +112,13 @@ export class ProductsService {
 		}
 	}
 
-	async disFav(id: string) {
+	async disFav(id: string): Promise<Favorite> {
 		await this.verifyIdAndReturnProductFav(id);
 
 		return await this.prisma.favorite.delete({ where: { id } });
 	}
 
-	async disFavAll(id: string) {
+	async disFavAll(id: string): Promise<string> {
 		const allUsers = await this.findAllFavUsersById(id);
 
 		allUsers.forEach(async e => {
