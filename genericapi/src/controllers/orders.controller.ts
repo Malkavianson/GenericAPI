@@ -31,22 +31,7 @@ export class OrdersController {
 	@ApiOperation({
 		summary: "Search one Order by ID",
 	})
-	async findOne(@Param("id") id: string) {
+	async findOne(@Param("id") id: string): Promise<Order> {
 		return await this.ordersService.findOne(id);
 	}
-
-	// @Patch(':id')
-	// @ApiOperation({
-	// 	summary: 'Patch one Order data information by ID',
-	// })
-	// async update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-	// 	return await this.ordersService.update(+id, updateOrderDto);
-	// }
-	// @Delete(':id')
-	// @ApiOperation({
-	// 	summary: 'Delete one Order by ID',
-	// })
-	// async remove(@Param('id') id: string) {
-	// 	return await this.ordersService.remove(+id);
-	// }
 }

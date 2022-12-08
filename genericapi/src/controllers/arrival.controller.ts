@@ -47,7 +47,7 @@ export class ArrivalsController {
 	@ApiOperation({
 		summary: "Release one Arrival state by ID",
 	})
-	remove(@Param("id") id: string) {
+	remove(@Param("id") id: string): Promise<Arrival> {
 		return this.arrivalsService.remove(id);
 	}
 }

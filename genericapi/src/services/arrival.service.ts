@@ -32,13 +32,13 @@ export class ArrivalsService {
 		return this.verifyIdAndReturnArrival(id);
 	}
 
-	async update(id: string, dto: UpdateArrivalDto) {
+	async update(id: string, dto: UpdateArrivalDto): Promise<Arrival> {
 		this.verifyIdAndReturnArrival(id);
 
 		return this.prisma.arrival.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string) {
+	async remove(id: string): Promise<Arrival> {
 		await this.verifyIdAndReturnArrival(id);
 
 		return this.prisma.arrival.delete({

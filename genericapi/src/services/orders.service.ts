@@ -1,13 +1,14 @@
+import { PrismaService } from "./prisma.service";
 import { Injectable } from "@nestjs/common";
 import { CreateOrderDto } from "../core";
 import { Prisma } from "@prisma/client";
-import { PrismaService } from "./prisma.service";
+import { Order } from "./models";
 
 @Injectable()
 export class OrdersService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async create(dto: CreateOrderDto) {
+	async create(dto: CreateOrderDto): Promise<Order> {
 		const data: Prisma.OrderCreateInput = {
 			arrival: {
 				connect: {
@@ -56,15 +57,11 @@ export class OrdersService {
 		});
 	}
 
-	findAll() {
+	findAll(): Promise<Order[]> {
 		return this.prisma.order.findMany({
 			select: {
 				id: true,
-				arrival: {
-					select: {
-						number: true,
-					},
-				},
+				arrival: true,
 				user: {
 					select: {
 						name: true,
@@ -84,7 +81,7 @@ export class OrdersService {
 		});
 	}
 
-	findOne(id: string) {
+	findOne(id: string): Promise<Order> {
 		return this.prisma.order.findUnique({
 			where: { id },
 			select: {
