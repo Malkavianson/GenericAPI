@@ -15,39 +15,39 @@ export class ArrivalsController {
 	@ApiOperation({
 		summary: "Fill a new arrival state",
 	})
-	create(@Body() dto: CreateArrivalDto): Promise<Arrival | void> {
-		return this.arrivalsService.create(dto);
+	async create(@Body() dto: CreateArrivalDto): Promise<Arrival | void> {
+		return await this.arrivalsService.create(dto);
 	}
 
 	@Get()
 	@ApiOperation({
 		summary: "List all Arrivals",
 	})
-	findAll(): Promise<Arrival[]> {
-		return this.arrivalsService.findAll();
+	async findAll(): Promise<Arrival[]> {
+		return await this.arrivalsService.findAll();
 	}
 
 	@Get(":id")
 	@ApiOperation({
 		summary: "Find one Arrival by ID",
 	})
-	findOne(@Param("id") id: string): Promise<Arrival> {
-		return this.arrivalsService.findOne(id);
+	async findOne(@Param("id") id: string): Promise<Arrival> {
+		return await this.arrivalsService.findOne(id);
 	}
 
 	@Patch(":id")
 	@ApiOperation({
 		summary: "Patch Arrival state information",
 	})
-	update(@Param("id") id: string, @Body() dto: UpdateArrivalDto): Promise<Arrival | void> {
-		return this.arrivalsService.update(id, dto);
+	async update(@Param("id") id: string, @Body() dto: UpdateArrivalDto): Promise<Arrival | void> {
+		return await this.arrivalsService.update(id, dto);
 	}
 
 	@Delete(":id")
 	@ApiOperation({
 		summary: "Release one Arrival state by ID",
 	})
-	remove(@Param("id") id: string): Promise<Arrival> {
-		return this.arrivalsService.remove(id);
+	async remove(@Param("id") id: string): Promise<Arrival> {
+		return await this.arrivalsService.remove(id);
 	}
 }
