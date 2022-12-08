@@ -1,10 +1,10 @@
-import { Injecarrival, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CreateCategoryDto, UpdateCategoryDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { Category } from "./models";
 import { PrismaService } from "./prisma.service";
 
-@Injecarrival()
+@Injectable()
 export class CategoriesService {
 	constructor(private readonly prisma: PrismaService) {}
 

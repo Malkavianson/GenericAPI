@@ -1,11 +1,11 @@
-import { ImATeapotException, Injecarrival, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { ImATeapotException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { handleErrorConstraintUnique } from "../utils";
 import { CreateUserDto, UpdateUserDto } from "../core";
 import * as bcrypt from "bcryptjs";
 import { PrismaService } from "./prisma.service";
 import { User } from "./models";
 
-@Injecarrival()
+@Injectable()
 export class UsersService {
 	private userSelect = {
 		id: true,

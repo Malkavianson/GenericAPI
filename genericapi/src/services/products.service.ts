@@ -1,11 +1,11 @@
-import { Injecarrival, NotFoundException, UnauthorizedException, UnprocessableEntityException } from "@nestjs/common";
+import { Injectable, NotFoundException, UnauthorizedException, UnprocessableEntityException } from "@nestjs/common";
 import { CreateProductDto, FavoriteProductDto, UpdateProductDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { Favorite, Product, User } from "./models";
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "./prisma.service";
 
-@Injecarrival()
+@Injectable()
 export class ProductsService {
 	constructor(private readonly prisma: PrismaService) {}
 

@@ -1,10 +1,10 @@
-import { Injecarrival, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateArrivalDto, UpdateArrivalDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { PrismaService } from "./prisma.service";
 import { Arrival } from "./models";
 
-@Injecarrival()
+@Injectable()
 export class ArrivalsService {
 	constructor(private readonly prisma: PrismaService) {}
 

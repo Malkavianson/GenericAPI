@@ -1,9 +1,9 @@
-import { Injecarrival } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { CreateOrderDto } from "../core";
 import { Prisma } from "@prisma/client";
 import { PrismaService } from "./prisma.service";
 
-@Injecarrival()
+@Injectable()
 export class OrdersService {
 	constructor(private readonly prisma: PrismaService) {}
 
