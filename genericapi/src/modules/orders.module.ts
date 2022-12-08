@@ -5,7 +5,10 @@ import { Module } from "@nestjs/common";
 import { PrismaModule } from "./prisma.module";
 
 @Module({
-	imports: [PrismaModule, PassportModule.register({ defaultStrategy: "jwt" })],
+	imports: [
+		PrismaModule,
+		PassportModule.register({ defaultStrategy: "jwt" }),
+	],
 	controllers: [OrdersController],
 	providers: [OrdersService],
 })

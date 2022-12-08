@@ -21,7 +21,9 @@ export class ArrivalsService {
 	}
 
 	async create(dto: CreateArrivalDto): Promise<Arrival | void> {
-		return await this.prisma.arrival.create({ data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.arrival
+			.create({ data: dto })
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<Arrival[]> {
@@ -35,7 +37,9 @@ export class ArrivalsService {
 	async update(id: string, dto: UpdateArrivalDto): Promise<Arrival> {
 		await this.verifyIdAndReturnArrival(id);
 
-		return await this.prisma.arrival.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.arrival
+			.update({ where: { id }, data: dto })
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<Arrival> {

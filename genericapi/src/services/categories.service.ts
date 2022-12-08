@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+	Injectable,
+	NotFoundException,
+	UnauthorizedException,
+} from "@nestjs/common";
 import { CreateCategoryDto, UpdateCategoryDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { Category } from "./models";
@@ -21,11 +25,15 @@ export class CategoriesService {
 	}
 
 	async create(dto: CreateCategoryDto): Promise<Category> {
-		return await this.prisma.category.create({ data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.category
+			.create({ data: dto })
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async findAll(): Promise<Category[]> {
-		return await this.prisma.category.findMany().catch(handleErrorConstraintUnique);
+		return await this.prisma.category
+			.findMany()
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async findOne(id: string): Promise<Category> {
@@ -35,7 +43,9 @@ export class CategoriesService {
 	async update(id: string, dto: UpdateCategoryDto): Promise<Category> {
 		await this.verifyIdAndReturnCategory(id);
 
-		return await this.prisma.category.update({ where: { id }, data: dto }).catch(handleErrorConstraintUnique);
+		return await this.prisma.category
+			.update({ where: { id }, data: dto })
+			.catch(handleErrorConstraintUnique);
 	}
 
 	async remove(id: string): Promise<Category> {
@@ -49,7 +59,9 @@ export class CategoriesService {
 				})
 				.catch(handleErrorConstraintUnique);
 		} catch (err) {
-			throw new UnauthorizedException(`Category ID: '${id}' still filled`);
+			throw new UnauthorizedException(
+				`Category ID: '${id}' still filled`,
+			);
 		}
 	}
 }

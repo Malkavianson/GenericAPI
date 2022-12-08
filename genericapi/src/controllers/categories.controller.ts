@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	UseGuards,
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateCategoryDto, UpdateCategoryDto } from "../core";
 import { CategoriesService, Category } from "../services";
@@ -39,7 +48,10 @@ export class CategoriesController {
 	@ApiOperation({
 		summary: "Patch one Product Category by ID",
 	})
-	async update(@Param("id") id: string, @Body() dto: UpdateCategoryDto): Promise<Category> {
+	async update(
+		@Param("id") id: string,
+		@Body() dto: UpdateCategoryDto,
+	): Promise<Category> {
 		return await this.categoriesService.update(id, dto);
 	}
 

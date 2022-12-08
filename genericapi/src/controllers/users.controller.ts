@@ -1,4 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, UnauthorizedException, ImATeapotException } from "@nestjs/common";
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	HttpCode,
+	HttpStatus,
+	UseGuards,
+	UnauthorizedException,
+	ImATeapotException,
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { LoggedUser } from "../decorators";
 import { CreateUserDto, UpdateUserDto } from "../core";
@@ -44,7 +57,11 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Patch one User by ID",
 	})
-	async update(@LoggedUser() user: User, @Param("id") id: string, @Body() dto: UpdateUserDto): Promise<User | void | ImATeapotException> {
+	async update(
+		@LoggedUser() user: User,
+		@Param("id") id: string,
+		@Body() dto: UpdateUserDto,
+	): Promise<User | void | ImATeapotException> {
 		return await this.usersService.update(id, dto, user);
 	}
 
@@ -55,7 +72,10 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Delete one User by ID",
 	})
-	async remove(@LoggedUser() user: User, @Param("id") id: string): Promise<User | UnauthorizedException> {
+	async remove(
+		@LoggedUser() user: User,
+		@Param("id") id: string,
+	): Promise<User | UnauthorizedException> {
 		return await this.usersService.remove(id, user);
 	}
 }

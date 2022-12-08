@@ -1,5 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common";
-import { CreateProductDto, FavoriteProductDto, UpdateProductDto } from "../core";
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	UseGuards,
+	Query,
+} from "@nestjs/common";
+import {
+	CreateProductDto,
+	FavoriteProductDto,
+	UpdateProductDto,
+} from "../core";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Favorite, ProductsService, Product } from "../services";
 import { AuthGuard } from "@nestjs/passport";
@@ -62,7 +76,10 @@ export class ProductsController {
 		summary: "Patch one Product data information by ID",
 	})
 	@ApiBearerAuth()
-	async update(@Param("id") id: string, @Body() dto: UpdateProductDto): Promise<Product | void> {
+	async update(
+		@Param("id") id: string,
+		@Body() dto: UpdateProductDto,
+	): Promise<Product | void> {
 		return await this.productsService.update(id, dto);
 	}
 

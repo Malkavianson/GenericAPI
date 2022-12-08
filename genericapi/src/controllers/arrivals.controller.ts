@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	UseGuards,
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateArrivalDto, UpdateArrivalDto } from "../core";
 import { ArrivalsService, Arrival } from "../services";
@@ -39,7 +48,10 @@ export class ArrivalsController {
 	@ApiOperation({
 		summary: "Patch Arrival state information",
 	})
-	async update(@Param("id") id: string, @Body() dto: UpdateArrivalDto): Promise<Arrival | void> {
+	async update(
+		@Param("id") id: string,
+		@Body() dto: UpdateArrivalDto,
+	): Promise<Arrival | void> {
 		return await this.arrivalsService.update(id, dto);
 	}
 

@@ -30,7 +30,8 @@ export class CreateProductDto {
 	@IsUrl()
 	@ApiProperty({
 		description: "Link to product Image",
-		example: "https://instadelivery-public.nyc3.digitaloceanspaces.com/itens/ZUltUeqT45PZpU5uCUrZTxwCoOtkNGmElHk9yFx5.jpg",
+		example:
+			"https://instadelivery-public.nyc3.digitaloceanspaces.com/itens/ZUltUeqT45PZpU5uCUrZTxwCoOtkNGmElHk9yFx5.jpg",
 	})
 	image: string;
 
