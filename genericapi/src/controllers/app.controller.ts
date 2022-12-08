@@ -1,5 +1,6 @@
 import { Controller, Get, Res } from "@nestjs/common";
 import { ApiExcludeEndpoint, ApiTags } from "@nestjs/swagger";
+import { Response } from "express";
 import { AppService } from "../services";
 
 @ApiTags("Status")
@@ -9,8 +10,7 @@ export class AppController {
 
 	@ApiExcludeEndpoint()
 	@Get()
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	getAppHome(@Res() res): void {
+	getAppHome(@Res() res: Response): void {
 		res.redirect("docs");
 	}
 	@Get("status")
