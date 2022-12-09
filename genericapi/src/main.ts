@@ -11,9 +11,15 @@ export async function bootstrap(): Promise<void> {
 	console.log("Starting and validating");
 
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		cors: true,
+		cors: {
+			allowedHeaders: "Content-Type, Accept",
+			credentials: true,
+			methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+			optionsSuccessStatus: 204,
+			origin: true,
+			preflightContinue: false,
+		},
 	});
-
 	app.set("trust proxy", 1);
 
 	app.useGlobalPipes(new ValidationPipe());
@@ -24,14 +30,15 @@ export async function bootstrap(): Promise<void> {
 		.setTitle("Generic API")
 		.setDescription("Controller API for educational purpose")
 		.setVersion("1.0")
+		.addTag("Status")
 		.addTag("Auth")
 		.addBearerAuth()
-		.addServer("https://generic-api-beta.vercel.app/")
-		.addServer("http://localhost:3333")
+		.addServer("https://generic-api-beta.vercel.app/", "Online")
+		.addServer("http://localhost:3333", "Local")
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
-	SwaggerModule.setup("docs", app, document);
+	SwaggerModule.setup("api", app, document);
 
 	console.log("Swagger.setup Builded");
 	console.log("Mapping routes:");

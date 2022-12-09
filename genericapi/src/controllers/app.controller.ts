@@ -11,7 +11,7 @@ export class AppController {
 	@ApiExcludeEndpoint()
 	@Get()
 	getAppHome(@Res() res: Response): void {
-		res.redirect("docs");
+		res.redirect("api");
 	}
 	@Get("status")
 	getAppStatus(): string {
