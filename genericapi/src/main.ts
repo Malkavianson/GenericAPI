@@ -10,8 +10,10 @@ export async function bootstrap(): Promise<void> {
 	console.clear();
 	console.log("Starting and validating");
 
-	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-		cors: true,
+	const app = await NestFactory.create<NestExpressApplication>(AppModule);
+	app.enableCors({
+		origin: [process.env.CORS_ORIGIN],
+		methods: ["HEAD", "GET", "POST", "PUT", "PATCH", "DELETE"],
 	});
 	app.set("trust proxy", 1);
 
