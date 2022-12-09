@@ -1,4 +1,4 @@
-# [NEST API](https://generic-api-beta.vercel.app)
+# [NEST API](https://generic-api-beta.vercel.app/docs)
 
 #### API em NEST para fins de aprendizagem
 
