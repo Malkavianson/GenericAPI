@@ -36,7 +36,7 @@ export async function bootstrap(): Promise<void> {
 	console.log("Swagger.setup Builded");
 	console.log("Mapping routes:");
 	await app.listen(PORT, () => {
-		console.log(`App bootstraped at :${PORT}`);
+		console.log(`Locally app bootstraped at http://localhost:${PORT}`);
 	});
 }
 bootstrap();
