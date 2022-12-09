@@ -11,7 +11,9 @@ export class AppController {
 	@ApiExcludeEndpoint()
 	@Get()
 	getAppHome(@Res() res: Response): void {
-		res.redirect("api");
+		res.redirect(
+			"https://editor.swagger.io/?url=https://generic-api-beta.vercel.app/api-yaml",
+		);
 	}
 	@Get("status")
 	getAppStatus(): string {
