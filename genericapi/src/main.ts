@@ -12,7 +12,7 @@ export async function bootstrap(): Promise<void> {
 
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
 		cors: {
-			allowedHeaders: "*",
+			allowedHeaders: "Content-Type, Accept",
 			credentials: true,
 			methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
 			optionsSuccessStatus: 204,
