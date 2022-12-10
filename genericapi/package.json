@@ -14,7 +14,7 @@
 		"prod": "node dist/main",
 		"prodev": "yarn format && yarn lint && yarn dev",
 		"prostart": "yarn format && yarn lint && yarn build && yarn start",
-		"teststart": "yarn build && yarn start",
+		"test": "yarn build && yarn start",
 		"start": "nest start"
 	},
 	"dependencies": {

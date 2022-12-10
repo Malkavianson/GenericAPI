@@ -9,6 +9,7 @@ import {
 	ProductsModule,
 	ArrivalsModule,
 } from "./modules";
+import { SeedModule } from "./modules/seed.module";
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import {
 		ProductsModule,
 		CategoriesModule,
 		OrdersModule,
+		SeedModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

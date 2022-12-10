@@ -8,7 +8,12 @@ import {
 	Delete,
 	UseGuards,
 } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
+import {
+	ApiBearerAuth,
+	ApiOperation,
+	ApiResponse,
+	ApiTags,
+} from "@nestjs/swagger";
 import { CreateArrivalDto, UpdateArrivalDto } from "../core";
 import { ArrivalsService, Arrival, User } from "../services";
 import { AuthGuard } from "@nestjs/passport";
@@ -24,6 +29,8 @@ export class ArrivalsController {
 	@Post()
 	@ApiOperation({
 		summary: "Fill a new arrival state",
+		description:
+			"This is the arrival list, you must to get your token before open a new order;",
 	})
 	async create(@Body() dto: CreateArrivalDto): Promise<Arrival | void> {
 		return await this.arrivalsService.create(dto);
@@ -58,6 +65,10 @@ export class ArrivalsController {
 	}
 
 	@Delete(":id")
+	@ApiResponse({
+		status: 200,
+		description: "Arrival place Released",
+	})
 	@ApiOperation({
 		summary: "Release one Arrival state by ID",
 	})

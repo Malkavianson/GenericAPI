@@ -6,7 +6,7 @@ export class CreateCategoryDto {
 	@IsNotEmpty()
 	@ApiProperty({
 		description: "Product category",
-		example: "Nakashoku",
+		example: "Product Category 1",
 	})
 	name: string;
 }

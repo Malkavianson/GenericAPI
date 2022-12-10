@@ -15,7 +15,7 @@ export class CreateOrderDto {
 	@IsUUID()
 	@ApiProperty({
 		description: "Costumer ID",
-		example: "12345abc-ab1d-12a3-1ab2-12a3b456c789",
+		example: "12123bc-abca-1aa3-1ab2-12a3b456c319",
 	})
 	userId: string;
 

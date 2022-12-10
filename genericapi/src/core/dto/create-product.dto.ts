@@ -6,7 +6,7 @@ export class CreateProductDto {
 	@IsNotEmpty()
 	@ApiProperty({
 		description: "Name of Product",
-		example: "Temaki Hot Philadelphia",
+		example: "my first Product",
 	})
 	name: string;
 
@@ -14,7 +14,7 @@ export class CreateProductDto {
 	@IsNotEmpty()
 	@ApiProperty({
 		description: "Description of Product",
-		example: "Fried Temaki of Salmon and Cream Cheese ",
+		example: "This is my first product",
 	})
 	description: string;
 
@@ -23,7 +23,7 @@ export class CreateProductDto {
 	})
 	@ApiProperty({
 		description: "Price of Product",
-		example: 5.99,
+		example: 1.99,
 	})
 	price: number;
 
@@ -31,7 +31,7 @@ export class CreateProductDto {
 	@ApiProperty({
 		description: "Link to product Image",
 		example:
-			"https://instadelivery-public.nyc3.digitaloceanspaces.com/itens/ZUltUeqT45PZpU5uCUrZTxwCoOtkNGmElHk9yFx5.jpg",
+			"https://numerologyinsightsblog.files.wordpress.com/2020/08/neutral-and-enemy-number-of-numerology.jpeg",
 	})
 	image: string;
 
@@ -39,7 +39,7 @@ export class CreateProductDto {
 	@IsNotEmpty()
 	@ApiProperty({
 		description: "Valid Product Category ID",
-		example: "12345abc-ab1d-12a3-1ab2-12a3b456c789",
+		example: "qw145abc-ab1d-12a3-1ab2-12a3b456c456",
 	})
 	categoryId: string;
 }

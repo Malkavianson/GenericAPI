@@ -5,7 +5,7 @@ export class CreateOrderToProductDto {
 	@IsUUID()
 	@ApiProperty({
 		description: "Ordered productId",
-		example: "12345abc-ab1d-12a3-1ab2-12a3b456c789",
+		example: "54335abc-ab1d-12a3-1cx2-12a3b456c122",
 	})
 	productId: string;
 
