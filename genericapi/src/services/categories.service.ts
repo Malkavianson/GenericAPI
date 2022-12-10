@@ -5,7 +5,7 @@ import {
 } from "@nestjs/common";
 import { CreateCategoryDto, UpdateCategoryDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
-import { Category } from "./models";
+import { Category, User } from "./models";
 import { PrismaService } from "./prisma.service";
 
 @Injectable()
@@ -24,7 +24,10 @@ export class CategoriesService {
 		return category;
 	}
 
-	async create(dto: CreateCategoryDto): Promise<Category> {
+	async create(dto: CreateCategoryDto, user: User): Promise<Category> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		return await this.prisma.category
 			.create({ data: dto })
 			.catch(handleErrorConstraintUnique);
@@ -40,7 +43,14 @@ export class CategoriesService {
 		return await this.verifyIdAndReturnCategory(id);
 	}
 
-	async update(id: string, dto: UpdateCategoryDto): Promise<Category> {
+	async update(
+		id: string,
+		dto: UpdateCategoryDto,
+		user: User,
+	): Promise<Category> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnCategory(id);
 
 		return await this.prisma.category
@@ -48,7 +58,10 @@ export class CategoriesService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string): Promise<Category> {
+	async remove(id: string, user: User): Promise<Category> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnCategory(id);
 
 		try {

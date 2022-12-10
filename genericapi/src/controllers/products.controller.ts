@@ -15,8 +15,9 @@ import {
 	UpdateProductDto,
 } from "../core";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { Favorite, ProductsService, Product } from "../services";
+import { Favorite, ProductsService, Product, User } from "../services";
 import { AuthGuard } from "@nestjs/passport";
+import { LoggedUser } from "../decorators";
 
 @ApiTags("Products")
 @Controller("products")
@@ -29,8 +30,11 @@ export class ProductsController {
 		summary: "Register a new Product",
 	})
 	@ApiBearerAuth()
-	async create(@Body() dto: CreateProductDto): Promise<Product | void> {
-		return await this.productsService.create(dto);
+	async create(
+		@Body() dto: CreateProductDto,
+		@LoggedUser() user: User,
+	): Promise<Product | void> {
+		return await this.productsService.create(dto, user);
 	}
 
 	@Post("fav")
@@ -39,24 +43,33 @@ export class ProductsController {
 		summary: "User new favorite product",
 	})
 	@ApiBearerAuth()
-	async favorite(@Body() dto: FavoriteProductDto): Promise<Favorite> {
-		return await this.productsService.favorite(dto);
+	async favorite(
+		@Body() dto: FavoriteProductDto,
+		@LoggedUser() user: User,
+	): Promise<Favorite> {
+		return await this.productsService.favorite(dto, user);
 	}
 
 	@Get()
 	@ApiOperation({
 		summary: "List all products",
 	})
-	async findAll(@Query() query: Partial<Product>): Promise<Product[]> {
-		return await this.productsService.findAll(query);
+	async findAll(
+		@Query() query: Partial<Product>,
+		@LoggedUser() user: User,
+	): Promise<Product[]> {
+		return await this.productsService.findAll(query, user);
 	}
 
 	@Get(":id")
 	@ApiOperation({
 		summary: "Search one Product by ID",
 	})
-	async findOne(@Param("id") id: string): Promise<Product> {
-		return await this.productsService.findOne(id);
+	async findOne(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<Product> {
+		return await this.productsService.findOne(id, user);
 	}
 
 	@Get(":id/fav")
@@ -66,8 +79,11 @@ export class ProductsController {
 		summary: "List all users that favorited one Product by ID",
 	})
 	@ApiBearerAuth()
-	async findAllFavUsersById(@Param("id") id: string): Promise<Favorite[]> {
-		return await this.productsService.findAllFavUsersById(id);
+	async findAllFavUsersById(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<Favorite[]> {
+		return await this.productsService.findAllFavUsersById(id, user);
 	}
 
 	@Patch(":id")
@@ -77,10 +93,11 @@ export class ProductsController {
 	})
 	@ApiBearerAuth()
 	async update(
+		@LoggedUser() user: User,
 		@Param("id") id: string,
 		@Body() dto: UpdateProductDto,
 	): Promise<Product | void> {
-		return await this.productsService.update(id, dto);
+		return await this.productsService.update(id, dto, user);
 	}
 
 	@Delete(":id")
@@ -89,8 +106,11 @@ export class ProductsController {
 		summary: "Delete one Product by ID",
 	})
 	@ApiBearerAuth()
-	async remove(@Param("id") id: string): Promise<Product> {
-		return await this.productsService.remove(id);
+	async remove(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<Product> {
+		return await this.productsService.remove(id, user);
 	}
 
 	@Delete("fav/:id")
@@ -100,8 +120,11 @@ export class ProductsController {
 	})
 	@UseGuards(AuthGuard())
 	@ApiBearerAuth()
-	async disFav(@Param("id") id: string): Promise<Favorite> {
-		return await this.productsService.disFav(id);
+	async disFav(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<Favorite> {
+		return await this.productsService.disFav(id, user);
 	}
 
 	@Delete("favAll/:id")
@@ -111,7 +134,10 @@ export class ProductsController {
 	})
 	@UseGuards(AuthGuard())
 	@ApiBearerAuth()
-	async disfavAll(@Param("id") id: string): Promise<string> {
-		return await this.productsService.disFavAll(id);
+	async disfavAll(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<string> {
+		return await this.productsService.disFavAll(id, user);
 	}
 }

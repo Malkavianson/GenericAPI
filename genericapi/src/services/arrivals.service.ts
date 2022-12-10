@@ -1,8 +1,12 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import {
+	Injectable,
+	NotFoundException,
+	UnauthorizedException,
+} from "@nestjs/common";
 import { CreateArrivalDto, UpdateArrivalDto } from "../core";
 import { handleErrorConstraintUnique } from "../utils";
 import { PrismaService } from "./prisma.service";
-import { Arrival } from "./models";
+import { Arrival, User } from "./models";
 
 @Injectable()
 export class ArrivalsService {
@@ -34,7 +38,14 @@ export class ArrivalsService {
 		return await this.verifyIdAndReturnArrival(id);
 	}
 
-	async update(id: string, dto: UpdateArrivalDto): Promise<Arrival> {
+	async update(
+		id: string,
+		dto: UpdateArrivalDto,
+		user: User,
+	): Promise<Arrival> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnArrival(id);
 
 		return await this.prisma.arrival
@@ -42,7 +53,10 @@ export class ArrivalsService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string): Promise<Arrival> {
+	async remove(id: string, user: User): Promise<Arrival> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnArrival(id);
 
 		return await this.prisma.arrival.delete({

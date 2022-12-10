@@ -42,13 +42,19 @@ export class ProductsService {
 		return favoriteId;
 	}
 
-	async create(dto: CreateProductDto): Promise<Product | void> {
+	async create(dto: CreateProductDto, user: User): Promise<Product | void> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		return await this.prisma.product
 			.create({ data: dto })
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async favorite(dto: FavoriteProductDto): Promise<Favorite> {
+	async favorite(dto: FavoriteProductDto, user: User): Promise<Favorite> {
+		if (!user.isAdmin) {
+			console.log(user);
+		}
 		const product: Product = await this.prisma.product.findUnique({
 			where: { name: dto.productName },
 		});
@@ -57,11 +63,11 @@ export class ProductsService {
 			throw new NotFoundException(`Product ${dto.productName} not found`);
 		}
 
-		const user: User = await this.prisma.users.findUnique({
+		const userUnique: User = await this.prisma.users.findUnique({
 			where: { id: dto.userId },
 		});
 
-		if (!user) {
+		if (!userUnique) {
 			throw new NotFoundException(`ID User '${dto.userId}' not found`);
 		}
 
@@ -81,7 +87,10 @@ export class ProductsService {
 		return this.prisma.favorite.create({ data });
 	}
 
-	async findAll(query: Partial<Product>): Promise<Product[]> {
+	async findAll(query: Partial<Product>, user: User): Promise<Product[]> {
+		if (!user.isAdmin) {
+			console.log(user);
+		}
 		const products: Product[] = await this.prisma.product
 			.findMany({ where: query })
 			.catch(() => {
@@ -94,11 +103,18 @@ export class ProductsService {
 
 		return products;
 	}
-	async findOne(id: string): Promise<Product> {
+
+	async findOne(id: string, user: User): Promise<Product> {
+		if (!user.isAdmin) {
+			console.log(user);
+		}
 		return await this.verifyIdAndReturnProduct(id);
 	}
 
-	async findAllFavUsersById(id: string): Promise<Favorite[]> {
+	async findAllFavUsersById(id: string, user: User): Promise<Favorite[]> {
+		if (!user.isAdmin) {
+			console.log(user);
+		}
 		const product: Product = await this.verifyIdAndReturnProduct(id);
 
 		return await this.prisma.favorite.findMany({
@@ -110,7 +126,14 @@ export class ProductsService {
 		});
 	}
 
-	async update(id: string, dto: UpdateProductDto): Promise<Product | void> {
+	async update(
+		id: string,
+		dto: UpdateProductDto,
+		user: User,
+	): Promise<Product | void> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnProduct(id);
 
 		return await this.prisma.product
@@ -118,7 +141,10 @@ export class ProductsService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async remove(id: string): Promise<Product> {
+	async remove(id: string, user: User): Promise<Product> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
 		await this.verifyIdAndReturnProduct(id);
 		try {
 			return await this.prisma.product.delete({ where: { id } });
@@ -129,14 +155,20 @@ export class ProductsService {
 		}
 	}
 
-	async disFav(id: string): Promise<Favorite> {
+	async disFav(id: string, user: User): Promise<Favorite> {
+		if (!user.isAdmin) {
+			console.log(user);
+		}
 		await this.verifyIdAndReturnProductFav(id);
 
 		return await this.prisma.favorite.delete({ where: { id } });
 	}
 
-	async disFavAll(id: string): Promise<string> {
-		const allUsers = await this.findAllFavUsersById(id);
+	async disFavAll(id: string, user: User): Promise<string> {
+		if (!user.isAdmin) {
+			throw new UnauthorizedException();
+		}
+		const allUsers = await this.findAllFavUsersById(id, user);
 
 		allUsers.forEach(async e => {
 			const exFav = await this.prisma.favorite.findMany({

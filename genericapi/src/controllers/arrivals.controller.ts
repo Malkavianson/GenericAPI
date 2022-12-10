@@ -10,8 +10,9 @@ import {
 } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateArrivalDto, UpdateArrivalDto } from "../core";
-import { ArrivalsService, Arrival } from "../services";
+import { ArrivalsService, Arrival, User } from "../services";
 import { AuthGuard } from "@nestjs/passport";
+import { LoggedUser } from "../decorators";
 
 @UseGuards(AuthGuard())
 @ApiTags("Arrivals")
@@ -51,15 +52,19 @@ export class ArrivalsController {
 	async update(
 		@Param("id") id: string,
 		@Body() dto: UpdateArrivalDto,
+		@LoggedUser() user: User,
 	): Promise<Arrival | void> {
-		return await this.arrivalsService.update(id, dto);
+		return await this.arrivalsService.update(id, dto, user);
 	}
 
 	@Delete(":id")
 	@ApiOperation({
 		summary: "Release one Arrival state by ID",
 	})
-	async remove(@Param("id") id: string): Promise<Arrival> {
-		return await this.arrivalsService.remove(id);
+	async remove(
+		@Param("id") id: string,
+		@LoggedUser() user: User,
+	): Promise<Arrival> {
+		return await this.arrivalsService.remove(id, user);
 	}
 }
