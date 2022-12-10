@@ -54,22 +54,16 @@ export class ProductsController {
 	@ApiOperation({
 		summary: "List all products",
 	})
-	async findAll(
-		@Query() query: Partial<Product>,
-		@LoggedUser() user: User,
-	): Promise<Product[]> {
-		return await this.productsService.findAll(query, user);
+	async findAll(@Query() query: Partial<Product>): Promise<Product[]> {
+		return await this.productsService.findAll(query);
 	}
 
 	@Get(":id")
 	@ApiOperation({
 		summary: "Search one Product by ID",
 	})
-	async findOne(
-		@Param("id") id: string,
-		@LoggedUser() user: User,
-	): Promise<Product> {
-		return await this.productsService.findOne(id, user);
+	async findOne(@Param("id") id: string): Promise<Product> {
+		return await this.productsService.findOne(id);
 	}
 
 	@Get(":id/fav")

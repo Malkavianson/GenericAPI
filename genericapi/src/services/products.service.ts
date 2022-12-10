@@ -87,10 +87,7 @@ export class ProductsService {
 		return this.prisma.favorite.create({ data });
 	}
 
-	async findAll(query: Partial<Product>, user: User): Promise<Product[]> {
-		if (!user.isAdmin) {
-			console.log(user);
-		}
+	async findAll(query: Partial<Product>): Promise<Product[]> {
 		const products: Product[] = await this.prisma.product
 			.findMany({ where: query })
 			.catch(() => {
@@ -104,10 +101,7 @@ export class ProductsService {
 		return products;
 	}
 
-	async findOne(id: string, user: User): Promise<Product> {
-		if (!user.isAdmin) {
-			console.log(user);
-		}
+	async findOne(id: string): Promise<Product> {
 		return await this.verifyIdAndReturnProduct(id);
 	}
 
