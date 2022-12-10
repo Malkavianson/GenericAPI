@@ -17,8 +17,8 @@ export class SeedService {
 			data.push({
 				name: `User_${i}`,
 				email: `user${i}@mail.com`,
-				password: `User${i}*1234`,
-				cpf: `${i}0872246${(i: number): number => i - 9}50`,
+				password: `User*1234`,
+				cpf: `${i}0872246${i}50`,
 				isAdmin: false,
 			});
 		}

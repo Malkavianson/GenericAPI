@@ -13,6 +13,7 @@ export async function bootstrap(): Promise<void> {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule);
 	app.enableCors({
 		allowedHeaders: "*",
+		methods: "HEAD, GET, PATCH, POST, PUT, DELETE",
 		origin: "*",
 	});
 	app.set("trust proxy", 1);
