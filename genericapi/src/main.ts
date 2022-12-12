@@ -32,7 +32,7 @@ export async function bootstrap(): Promise<void> {
 		.addBearerAuth()
 		.addServer("https://generic-api-beta.vercel.app/", "Online official")
 		.addServer(
-			"https://genericapi-production.up.railway.app/api",
+			"https://genericapi-production.up.railway.app/",
 			"Online Backup",
 		)
 		.addServer("http://localhost:3333", "Local")
