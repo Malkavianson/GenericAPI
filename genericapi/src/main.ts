@@ -30,7 +30,11 @@ export async function bootstrap(): Promise<void> {
 		.addTag("Status")
 		.addTag("Auth")
 		.addBearerAuth()
-		.addServer("https://generic-api-beta.vercel.app/", "Online")
+		.addServer("https://generic-api-beta.vercel.app/", "Online official")
+		.addServer(
+			"https://genericapi-production.up.railway.app/api",
+			"Online Backup",
+		)
 		.addServer("http://localhost:3333", "Local")
 		.build();
 
