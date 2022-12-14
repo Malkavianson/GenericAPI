@@ -8,3 +8,4 @@ export * from "./products.service";
 export * from "./arrivals.service";
 export * from "./users.service";
 export * from "./seed.service";
+export * from "./home.service";

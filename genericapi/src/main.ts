@@ -29,6 +29,7 @@ export async function bootstrap(): Promise<void> {
 		.setExternalDoc(`Local Documentation`, `http://localhost:${PORT}/api`)
 		.addTag("Status")
 		.addTag("Auth")
+		.addTag("Home")
 		.addBearerAuth()
 		.addServer("https://generic-api-beta.vercel.app/", "Online official")
 		.addServer(

@@ -5,3 +5,4 @@ export * from "./product.entity";
 export * from "./arrival.entity";
 export * from "./user.entity";
 export * from "./orderToProduct.entity";
+export * from "./home.entity";

@@ -6,3 +6,4 @@ export * from "./products.controller";
 export * from "./arrivals.controller";
 export * from "./users.controller";
 export * from "./seed.controller";
+export * from "./home.controller";

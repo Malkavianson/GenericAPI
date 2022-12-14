@@ -7,3 +7,4 @@ export * from "./products.module";
 export * from "./arrivals.module";
 export * from "./users.module";
 export * from "./seed.module";
+export * from "./home.module";

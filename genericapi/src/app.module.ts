@@ -8,8 +8,9 @@ import {
 	OrdersModule,
 	ProductsModule,
 	ArrivalsModule,
+	SeedModule,
+	HomeModule,
 } from "./modules";
-import { SeedModule } from "./modules/seed.module";
 
 @Module({
 	imports: [
@@ -20,6 +21,7 @@ import { SeedModule } from "./modules/seed.module";
 		CategoriesModule,
 		OrdersModule,
 		SeedModule,
+		HomeModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],
