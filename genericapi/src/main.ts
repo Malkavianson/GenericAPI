@@ -18,8 +18,13 @@ export async function bootstrap(): Promise<void> {
 	});
 	app.set("trust proxy", 1);
 
-	app.useGlobalPipes(new ValidationPipe());
-
+	app.useGlobalPipes(
+		new ValidationPipe({
+			forbidNonWhitelisted: true,
+			whitelist: true,
+			transform: true,
+		}),
+	);
 	console.log("Server Started\n\nMapping documentation");
 
 	const config = new DocumentBuilder()
@@ -33,7 +38,7 @@ export async function bootstrap(): Promise<void> {
 		.addBearerAuth()
 		.addServer("https://generic-api-beta.vercel.app/", "Online official")
 		.addServer("https://genericapi.up.railway.app/", "Online Backup")
-		.addServer("http://localhost:3333", "Local")
+		.addServer(`http://localhost:${PORT}`, "Local")
 		.build();
 
 	const document = SwaggerModule.createDocument(app, config);
