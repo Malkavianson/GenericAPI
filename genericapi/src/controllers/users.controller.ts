@@ -37,8 +37,8 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Returns all users",
 	})
-	async findAll(): Promise<User[]> {
-		return await this.usersService.findAll();
+	async findAll(@LoggedUser() user: User): Promise<User[]> {
+		return await this.usersService.findAll(user);
 	}
 
 	@Get(":id")
@@ -47,8 +47,11 @@ export class UsersController {
 	@ApiOperation({
 		summary: "Returns one User by ID",
 	})
-	async findOne(@Param("id") id: string): Promise<User> {
-		return await this.usersService.findOne(id);
+	async findOne(
+		@LoggedUser() user: User,
+		@Param("id") id: string,
+	): Promise<User> {
+		return await this.usersService.findOne(id, user);
 	}
 
 	@Patch(":id")

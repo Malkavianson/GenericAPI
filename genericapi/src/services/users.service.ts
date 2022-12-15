@@ -16,7 +16,6 @@ export class UsersService {
 		id: true,
 		name: true,
 		email: true,
-		cpf: true,
 		isAdmin: true,
 		updatedAt: true,
 		createdAt: true,
@@ -40,17 +39,21 @@ export class UsersService {
 			.catch(handleErrorConstraintUnique);
 	}
 
-	async findAll(): Promise<User[]> {
-		return await this.prisma.users.findMany({
-			select: this.userSelect,
-		});
+	async findAll(user: User): Promise<User[]> {
+		return await this.prisma.users
+			.findMany({
+				select: { ...this.userSelect, cpf: user.isAdmin },
+			})
+			.catch(handleErrorConstraintUnique);
 	}
 
-	async verifyIdAndReturnUser(id: string): Promise<User> {
-		const user: User = await this.prisma.users.findUnique({
-			where: { id },
-			select: this.userSelect,
-		});
+	async verifyIdAndReturnUser(id: string, currentUser: User): Promise<User> {
+		const user: User = await this.prisma.users
+			.findUnique({
+				where: { id },
+				select: { ...this.userSelect, cpf: currentUser.isAdmin },
+			})
+			.catch(handleErrorConstraintUnique);
 
 		if (!user) {
 			throw new NotFoundException(`Entrada de id '${id}' não encontrada`);
@@ -59,8 +62,10 @@ export class UsersService {
 		return user;
 	}
 
-	async findOne(id: string): Promise<User> {
-		return await this.verifyIdAndReturnUser(id);
+	async findOne(id: string, user: User): Promise<User> {
+		return await this.verifyIdAndReturnUser(id, user).catch(
+			handleErrorConstraintUnique,
+		);
 	}
 
 	private async updateUser(id: string, dto: UpdateUserDto): Promise<User> {
@@ -78,7 +83,7 @@ export class UsersService {
 		dto: UpdateUserDto,
 		user: User,
 	): Promise<ImATeapotException | User> {
-		const thisUser = await this.verifyIdAndReturnUser(id);
+		const thisUser = await this.verifyIdAndReturnUser(id, user);
 
 		if (dto.password) {
 			const hashedPassword = await bcrypt.hash(dto.password, 7);
@@ -120,18 +125,22 @@ export class UsersService {
 		id: string,
 		user: User,
 	): Promise<User | UnauthorizedException> {
-		const thisUser = await this.verifyIdAndReturnUser(id);
+		const thisUser = await this.verifyIdAndReturnUser(id, user);
 		if (user.isAdmin) {
-			return await this.prisma.users.delete({
-				where: { id },
-				select: this.userSelect,
-			});
+			return await this.prisma.users
+				.delete({
+					where: { id },
+					select: this.userSelect,
+				})
+				.catch(handleErrorConstraintUnique);
 		}
 		if (thisUser.id === user.id) {
-			return await this.prisma.users.delete({
-				where: { id },
-				select: this.userSelect,
-			});
+			return await this.prisma.users
+				.delete({
+					where: { id },
+					select: this.userSelect,
+				})
+				.catch(handleErrorConstraintUnique);
 		} else {
 			return new UnauthorizedException("not authorized");
 		}
